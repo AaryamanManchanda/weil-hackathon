@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bg: #f3f1ec;
+  --card: #fcfbf8;
+  --border: #ddd9d0;
+  --primary: #141414;
+  --secondary: #2f9e63;
+  --danger: #c45555;
+  --text-primary: #181818;
+  --text-secondary: #7b7a73;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-bg font-sans text-text-primary antialiased;
+    background-image:
+      linear-gradient(rgba(24, 24, 24, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(24, 24, 24, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(20, 20, 20, 0.035), transparent 42%);
+    background-size: 72px 72px, 72px 72px, auto;
+    background-position: center, center, center, center;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .panel-surface {
+    @apply rounded-2xl border border-border bg-card shadow-sm shadow-stone-200/70 backdrop-blur-xl;
+  }
+
+  .panel-glow {
+    box-shadow:
+      0 0 0 1px rgba(20, 20, 20, 0.04),
+      0 18px 36px rgba(77, 70, 56, 0.08);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(221, 217, 208, 0.65);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(24, 24, 24, 0.16);
+  border-radius: 9999px;
+}

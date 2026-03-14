@@ -1,0 +1,9 @@
+flask
+requests
+fastapi
+uvicorn
+python-dotenv
+langchain
+langchain-google-genai
+langgraph
+google-generativeai

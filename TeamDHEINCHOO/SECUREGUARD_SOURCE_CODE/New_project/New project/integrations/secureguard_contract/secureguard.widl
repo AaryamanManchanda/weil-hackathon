@@ -1,0 +1,26 @@
+interface Escrow {
+
+    mutate func deposit(amount: u64) -> result<(), string>;
+
+    mutate func submit_proof(
+        scan_id: string,
+        vulnerability: string,
+        endpoint: string,
+        severity: string,
+        proof_hash: string,
+        confidence: f64
+    ) -> result<(), string>;
+
+    mutate func release() -> result<(), string>;
+
+    mutate func log_event(stage: string, data: string) -> result<string, string>;
+
+    query func get_status() -> result<string, string>;
+
+    query func get_logs() -> result<string, string>;
+
+    query func get_bounty() -> result<u64, string>;
+
+    query func get_proof() -> result<string, string>
+
+}

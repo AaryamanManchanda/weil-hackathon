@@ -1,0 +1,1 @@
+/home/himu/emsdk/upstream/emscripten/em++  -s STANDALONE_WASM --no-entry -O3 -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s INITIAL_MEMORY=10MB -s ALLOW_MEMORY_GROWTH=1 CMakeFiles/counter.dir/src/main.cpp.o -o counter.js  ../../../adk/cpp/weilsdk/build/lib/libweilsdk_static.a 

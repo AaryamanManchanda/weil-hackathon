@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>Acme Web3 Store - WUSD Payments</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { border-bottom: 1px solid #334155; padding-bottom: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;}
+        .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: #1e293b; padding: 20px; border-radius: 8px; border: 1px solid #334155; }
+        .card h3 { margin-top: 0; }
+        .price { color: #10b981; font-weight: bold; font-size: 1.2rem; margin: 10px 0; }
+        button { background: #3b82f6; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
+        button:hover { background: #2563eb; }
+        .checkout-btn { background: #10b981; margin-top: 20px;}
+        .checkout-btn:hover { background: #059669; }
+        #cart-panel { background: #1e293b; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #334155; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
+    </style>
+</head>
+<body>
+    <div class=""container"">
+        <header>
+            <h1>?? Acme Web3 Hardware</h1>
+            <div>
+                Cart: <strong id=""cart-count"">0</strong> items
+            </div>
+        </header>
+        
+        <h2>Available Products</h2>
+        <div class=""products"" id=""products-grid"">
+            <!-- Rendered by JS -->
+        </div>
+
+        <div id=""cart-panel"" style=""display:none;"">
+            <h2>?? Checkout</h2>
+            <div id=""cart-items""></div>
+            <div style=""display:flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-top: 15px;"">
+                <span>Total:</span>
+                <span id=""cart-total"">0 WUSD</span>
+            </div>
+            <button class=""checkout-btn"" onclick=""checkout()"">Pay with WUSD (Weilchain)</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let products = [
+            { id: 1, name: "Cold Storage Wallet Mk. I", price: 150.00, desc: "Ultra-secure air-gapped crypto storage." },
+            { id: 2, name: "Weilchain Validator Node", price: 850.00, desc: "Plug-and-play validator appliance." },
+            { id: 3, name: "Faraday Bag Premium", price: 45.00, desc: "Signal blocking utility pouch." }
+        ];
+
+        function renderProducts() {
+            const grid = document.getElementById("products-grid");
+            grid.innerHTML = products.map(p => 
+                <div class="card">
+                    <h3>\</h3>
+                    <p style="font-size:0.9rem; color:#94a3b8">\</p>
+                    <div class="price">\ WUSD</div>
+                    <button onclick="addToCart(\, '\', \)">Add to Cart</button>
+                </div>
+            ).join("");
+        }
+
+        function addToCart(id, name, price) {
+            cart.push({ id, name, price });
+            document.getElementById("cart-count").innerText = cart.length;
+            renderCart();
+        }
+
+        function renderCart() {
+            const panel = document.getElementById("cart-panel");
+            const items = document.getElementById("cart-items");
+            
+            if (cart.length === 0) {
+                panel.style.display = "none";
+                return;
+            }
+            
+            panel.style.display = "block";
+            let total = 0;
+            
+            items.innerHTML = cart.map(item => {
+                total += item.price;
+                return <div class="cart-item"><span>\</span> <span>\ WUSD</span></div>;
+            }).join("");
+            
+            document.getElementById("cart-total").innerText = total.toFixed(2) + " WUSD";
+        }
+
+        async function checkout() {
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            
+            try {
+                const res = await fetch("http://localhost:5000/checkout", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ price: total, payment: "WUSD" })
+                });
+                const data = await res.json();
+                
+                alert("? Smart Contract Executed!\n\n" + 
+                      "Transaction sent to Weilchain using WUSD.\n" + 
+                      "Status: " + data.status + "\n" +
+                      "Amount: " + data.amount + " " + data.currency);
+                      
+                cart = [];
+                document.getElementById("cart-count").innerText = "0";
+                renderCart();
+            } catch (err) {
+                alert("Error connecting to store backend.");
+            }
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>

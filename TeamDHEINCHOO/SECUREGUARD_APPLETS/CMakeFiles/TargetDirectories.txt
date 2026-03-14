@@ -1,0 +1,3 @@
+/home/himu/wadk/applets/cpp/secureguard/CMakeFiles/counter.dir
+/home/himu/wadk/applets/cpp/secureguard/CMakeFiles/edit_cache.dir
+/home/himu/wadk/applets/cpp/secureguard/CMakeFiles/rebuild_cache.dir
